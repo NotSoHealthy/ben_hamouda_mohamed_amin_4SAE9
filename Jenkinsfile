@@ -7,7 +7,12 @@ pipeline {
     stages {
         stage('Code Test') {
             steps {
-                sh "mvn test -Dspring.profiles.active=test"
+                sh "mvn test"
+            }
+        }
+        stage('Code Build') {
+            steps {
+                sh "mvn package"
             }
         }
     }
