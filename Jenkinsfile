@@ -5,6 +5,11 @@ pipeline {
         maven "M2_HOME"
     }
 
+    environment {
+        DOCKER_USER ='notsohealthy'
+        DOCKER_PASS = credentials('notsohealthy')
+    }
+
     stages {
         stage("Code Checkout") {
             steps {
@@ -36,6 +41,8 @@ pipeline {
         stage('Docker Push') {
             steps {
                 script {
+                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
+                    sh "docker ps -a"
                     sh "docker push notsohealthy/student-management:1.0"
                 }
             }
