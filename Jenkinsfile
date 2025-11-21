@@ -36,7 +36,7 @@ pipeline {
         stage('Docker Push') {
             steps {
                 script {
-                    sh "docker push NotSoHealthy/student-management:1.0:1.0"
+                    sh "docker push NotSoHealthy/student-management:1.0"
                 }
             }
         }
