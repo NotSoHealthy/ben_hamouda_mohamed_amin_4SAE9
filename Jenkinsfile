@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage('MAVEN') {
             steps {
-                sh "mvn -version"
+                sh "mvn test"
+                sh "mvn package"
             }
         }
     }
