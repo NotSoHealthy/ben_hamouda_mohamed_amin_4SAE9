@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     tools {
         maven "M2_HOME"
     }
@@ -8,18 +9,42 @@ pipeline {
         stage("Code Checkout") {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/NotSoHealthy/ben_hamouda_mohamed_amin_4SAE9.git'
+                    url: 'https://github.com/NotSoHealthy/ben_hamouda_mohamed_amin_4SAE9.git'
             }
         }
+
         stage('Code Test') {
             steps {
                 sh "mvn test"
             }
         }
+
         stage('Code Build') {
             steps {
                 sh "mvn package"
             }
+        }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    sh "docker build -t student-management:1.0 ."
+                }
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                script {
+                    sh "docker run -d -p 8089:8089 --name student-management student-management:1.0"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished!"
         }
     }
 }
