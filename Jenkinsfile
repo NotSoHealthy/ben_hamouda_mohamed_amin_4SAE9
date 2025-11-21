@@ -28,7 +28,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    sh "docker build -t student-management:1.0 ."
+                    sh "docker build -t notsohealthy/student-management:1.0 ."
                 }
             }
         }
