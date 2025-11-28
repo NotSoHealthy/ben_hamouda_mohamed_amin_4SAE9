@@ -10,7 +10,6 @@ class StudentManagementApplicationTests {
     @Test
     void contextLoads() {
         Assertions.assertTrue(true);
-        System.out.println("Context Loads Successfully");
     }
 
 }
