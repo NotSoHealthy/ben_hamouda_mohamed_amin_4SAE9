@@ -7,8 +7,6 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS= credentials('7ef56a65-28c0-4778-8db5-60003da1dc27')
-        K8S_NAMESPACE = 'devops'
-        DEPLOYMENT_FILE = 'spring-deployment.yaml'
     }
 
     stages {
@@ -58,8 +56,8 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    sh "kubectl apply -f ${DEPLOYMENT_FILE} -n ${K8S_NAMESPACE} --validate=false"
-                    sh "kubectl rollout status deployment/spring-app -n ${K8S_NAMESPACE}"
+                    sh "kubectl apply -f spring-deployment.yaml -n devops"
+                    sh "kubectl rollout status deployment/spring-app -n devops"
                 }
             }
         }
