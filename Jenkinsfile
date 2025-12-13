@@ -16,19 +16,23 @@ pipeline {
                     url: 'https://github.com/NotSoHealthy/ben_hamouda_mohamed_amin_4SAE9.git'
             }
         }
-
         stage('Code Test') {
             steps {
                 sh "mvn test"
             }
         }
-
         stage('Code Build') {
             steps {
                 sh "mvn package"
             }
         }
-
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh "kubectl apply -f . -n devops"
+                }
+            }
+        }
         stage('Sonar Test'){
             steps {
                 withSonarQubeEnv('Minikube-Sonar') {
@@ -36,7 +40,6 @@ pipeline {
                 }
             }
         }
-
         stage('Docker Build') {
             steps {
                 script {
@@ -44,19 +47,11 @@ pipeline {
                 }
             }
         }
-
         stage('Docker Push') {
             steps {
                 script {
                     sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
                     sh "docker push notsohealthy/student-management:1.0"
-                }
-            }
-        }
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    sh "kubectl apply -f . -n devops"
                 }
             }
         }
