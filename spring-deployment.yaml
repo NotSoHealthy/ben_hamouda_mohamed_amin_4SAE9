@@ -3,18 +3,7 @@ kind: ConfigMap
 metadata:
   name: spring-config
 data:
-  SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/springdb
-
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: spring-secret
-type: Opaque
-data:
-  SPRING_DATASOURCE_USERNAME: cm9vdA==
-  SPRING_DATASOURCE_PASSWORD: cm9vdA==
-
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/springdb?createDatabaseIfNotExist=true
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -40,7 +29,6 @@ spec:
                 name: spring-config
             - secretRef:
                 name: spring-secret
-
 ---
 apiVersion: v1
 kind: Service

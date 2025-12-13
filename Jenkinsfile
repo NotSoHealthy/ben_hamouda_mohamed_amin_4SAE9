@@ -31,7 +31,7 @@ pipeline {
 
         stage('Sonar Test'){
             steps {
-                withSonarQubeEnv('SQ1') {
+                withSonarQubeEnv('Minikube-Sonar') {
                     sh "mvn sonar:sonar"
                 }
             }
@@ -56,8 +56,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    sh "kubectl apply -f mysql-deployment.yaml -n devops"
-                    sh "kubectl apply -f spring-deployment.yaml -n devops"
+                    sh "kubectl apply -f . -n devops"
                 }
             }
         }
