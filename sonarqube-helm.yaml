@@ -1,0 +1,21 @@
+community:
+  enabled: true
+
+persistence:
+  enabled: true
+  size: 5Gi
+  storageClass: standard
+
+postgresql:
+  persistence:
+    enabled: true
+    size: 5Gi
+    storageClass: standard
+
+service:
+  type: NodePort
+  nodePort: 30090 # pick an unused port between 30000-32767
+
+# Monitoring secret
+monitoringPasscodeSecretName: sonarqube-generic-secret
+monitoringPasscodeSecretKey: passcode

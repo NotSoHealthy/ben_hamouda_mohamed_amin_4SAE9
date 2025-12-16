@@ -1,0 +1,6 @@
+#Remove Old Sonarqube deployment
+kubectl delete svc sonarqube-sonarqube -n devops
+kubectl delete pvc -n devops -l app.kubernetes.io/instance=sonarqube
+
+#Deploy Sonarqube
+helm install sonarqube sonarqube/sonarqube -n devops -f ben_hamouda_mohamed_amin_4SAE9/sonarqube-helm.yaml
