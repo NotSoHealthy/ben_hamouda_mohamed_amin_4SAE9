@@ -2,5 +2,21 @@
 kubectl delete svc sonarqube-sonarqube -n devops
 kubectl delete pvc -n devops -l app.kubernetes.io/instance=sonarqube
 
-#Deploy Sonarqube
+#Install from helm
 helm install sonarqube sonarqube/sonarqube -n devops -f ben_hamouda_mohamed_amin_4SAE9/sonarqube-helm.yaml
+helm upgrade prometheus prometheus-community/prometheus \
+  --namespace monitoring \
+  --set server.persistentVolume.enabled=true \
+  --set server.persistentVolume.size=2Gi \
+  --set server.persistentVolume.storageClass=standard \
+  --set prometheus.prometheusSpec.serviceMonitorNamespaceSelector={}
+helm upgrade grafana grafana/grafana \
+  --namespace monitoring \
+  --set persistence.enabled=true \
+  --set persistence.size=1Gi \
+  --set persistence.storageClassName=standard
+
+#Port Forwarding
+kubectl port-forward svc/grafana 3000:80 -n monitoring
+kubectl port-forward svc/prometheus-server 9090:80 -n monitoring
+kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090:9090 -n monitoring
