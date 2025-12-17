@@ -11,7 +11,7 @@ metadata:
   name: spring-app
   namespace: devops
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: spring-app
@@ -23,6 +23,7 @@ spec:
       containers:
         - name: spring-app
           image: notsohealthy/student-management:1.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8089
           envFrom:
